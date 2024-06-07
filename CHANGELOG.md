@@ -1,3 +1,8 @@
+# Unreleased (0.3.0)
+
+* Make `Index::into_raw_parts` and `Index::from_raw_parts` `const`
+* Add `Index::index()` and `Index::generation()` functions
+
 # 0.2.9
 
 Released 2023-05-22.
