@@ -1,5 +1,5 @@
-extern crate generational_arena;
-use generational_arena::Arena;
+extern crate arena;
+use arena::Arena;
 use std::collections::BTreeSet;
 
 #[test]
@@ -7,7 +7,7 @@ fn can_decompose_index() {
     let mut arena = Arena::with_capacity(1);
     let i = arena.try_insert(42).unwrap();
     let (k, g) = i.into_raw_parts();
-    let generated_i = generational_arena::Index::from_raw_parts(k, g);
+    let generated_i = arena::Index::from_raw_parts(k, g);
     assert_eq!(arena[generated_i], 42);
 }
 
@@ -134,11 +134,17 @@ fn get_unknown_gen() {
         assert_eq!(id, idx);
         assert_eq!(*el, 5);
     } else {
-        panic!("element at index {} (without generation) should exist at this point", i);
+        panic!(
+            "element at index {} (without generation) should exist at this point",
+            i
+        );
     }
     arena.remove(idx);
     if let Some((_, _)) = arena.get_unknown_gen(i) {
-        panic!("element at index {} (without generation) should not exist at this point", i);
+        panic!(
+            "element at index {} (without generation) should not exist at this point",
+            i
+        );
     }
 }
 
@@ -154,12 +160,18 @@ fn get_unknown_gen_mut() {
         assert_eq!(*el, 5);
         *el += 1;
     } else {
-        panic!("element at index {} (without generation) should exist at this point", i);
+        panic!(
+            "element at index {} (without generation) should exist at this point",
+            i
+        );
     }
     assert_eq!(arena.get_mut(idx).cloned(), Some(6));
     arena.remove(idx);
     if let Some((_, _)) = arena.get_unknown_gen_mut(i) {
-        panic!("element at index {} (without generation) should not exist at this point", i);
+        panic!(
+            "element at index {} (without generation) should not exist at this point",
+            i
+        );
     }
 }
 
@@ -193,6 +205,8 @@ fn index_deleted_item() {
     let mut arena = Arena::new();
     let idx = arena.insert(42);
     arena.remove(idx);
+
+    #[allow(clippy::no_effect)]
     arena[idx];
 }
 

@@ -1,14 +1,17 @@
 [package]
-authors = ["Nick Fitzgerald <fitzgen@gmail.com>"]
+authors = [
+    "Nick Fitzgerald <fitzgen@gmail.com>",
+    "Hugo van de Kuilen <hugo.vandekuilen1234567890@gmail.com>",
+]
 categories = ["memory-management", "no-std", "rust-patterns", "data-structures"]
 description = "A safe arena allocator that supports deletion without suffering from the ABA problem by using generational indices."
 keywords = ["generation", "index", "arena", "ecs"]
 license = "MPL-2.0"
-name = "generational-arena"
+name = "arena"
 readme = "./README.md"
-repository = "https://github.com/fitzgen/generational-arena"
-version = "0.2.9"
-edition = "2018"
+repository = "https://github.com/Hugo4IT/arena"
+version = "0.3.0"
+edition = "2021"
 
 # The following notice applies to all the files in this source tree:
 #
@@ -20,7 +23,6 @@ edition = "2018"
 # licenced MPL-2.0, you should add that notice to each copied file.)
 
 [dependencies]
-cfg-if = "1.0.0"
 serde = { version = "1.0.102", optional = true, default-features = false }
 
 [dev-dependencies]

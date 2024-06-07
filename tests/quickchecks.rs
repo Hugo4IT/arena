@@ -1,8 +1,8 @@
-extern crate generational_arena;
+extern crate arena;
 #[macro_use]
 extern crate quickcheck;
 
-use generational_arena::Arena;
+use arena::Arena;
 use std::collections::BTreeSet;
 use std::iter::FromIterator;
 
@@ -137,13 +137,13 @@ quickcheck! {
 
         // check that the results from get() match get_unknown_check()
         inserted_indices.iter().enumerate().all(|(i, idx)| {
-            let shared_check = if let Some(_) = arena.get(*idx) {
+            let shared_check = if arena.get(*idx).is_some() {
                 let internal_index = idx.into_raw_parts().0;
                 arena.get_unknown_gen(internal_index).is_some() && unknown_gen_indices[i] == internal_index
             } else {
                 true
             };
-            let mut_check = if let Some(_) = arena.get_mut(*idx) {
+            let mut_check = if arena.get_mut(*idx).is_some() {
                 let internal_index = idx.into_raw_parts().0;
                 arena.get_unknown_gen_mut(internal_index).is_some() && unknown_gen_indices[i] == internal_index
             } else {
@@ -177,7 +177,7 @@ quickcheck! {
         }
 
         arena.retain(|_, &mut b| b);
-        
+
         for live in live_indices.iter().cloned() {
             assert!(arena.contains(live));
         }
